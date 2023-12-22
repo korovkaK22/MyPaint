@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mypaint.controllers.MainController">
+   <children>
+      <MenuBar fx:id="menuBar" layoutY="1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="943.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="fileOpen" mnemonicParsing="false" text="Open" />
+                  <MenuItem fx:id="fileSave" mnemonicParsing="false" text="Save" />
+                  <MenuItem fx:id="fileSaveAs" mnemonicParsing="false" text="Save as" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem fx:id="editUndo" mnemonicParsing="false" text="Undo" />
+                  <MenuItem fx:id="editRedo" mnemonicParsing="false" text="Redo" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Effects (Online)">
+            <items>
+              <MenuItem fx:id="effectRotate" mnemonicParsing="false" text="Rotate" />
+                  <MenuItem fx:id="effectSize" mnemonicParsing="false" text="Size" />
+                  <MenuItem fx:id="effectDarkness" mnemonicParsing="false" text="Darkness" />
+            </items>
+          </Menu>
+        </menus>
+         <padding>
+            <Insets left="5.0" top="3.0" />
+         </padding>
+      </MenuBar>
+      <ScrollPane fx:id="canvasScrollPanel" layoutX="6.0" layoutY="79.0" prefHeight="620.0" prefWidth="922.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="79.0">
+         <content>
+            <fx:include fx:id="canvasesFXML" source="canvas.fxml" />
+         </content></ScrollPane>
+      <MenuButton id="toolButton" fx:id="toolsButton" layoutX="4.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" text="Pencil" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="41.0">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Pencil" />
+          <MenuItem mnemonicParsing="false" text="Rubber" />
+            <MenuItem mnemonicParsing="false" text="Move" />
+        </items>
+      </MenuButton>
+      <Separator layoutX="-1.0" layoutY="68.0" prefHeight="11.0" prefWidth="943.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" />
+      <ColorPicker fx:id="colorPicker" layoutX="262.0" layoutY="41.0" prefHeight="26.0" prefWidth="41.0" AnchorPane.leftAnchor="262.0" AnchorPane.topAnchor="41.0">
+         <value>
+            <Color />
+         </value></ColorPicker>
+      <Label layoutX="108.0" layoutY="41.0" text="Size" textAlignment="CENTER" AnchorPane.leftAnchor="108.0" AnchorPane.topAnchor="41.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ChoiceBox id="sizeChooser" fx:id="sizeChooser" layoutX="146.0" layoutY="42.0" prefHeight="26.0" prefWidth="53.0" AnchorPane.leftAnchor="146.0" AnchorPane.topAnchor="41.0" />
+      <Label layoutX="214.0" layoutY="41.0" prefHeight="26.0" prefWidth="54.0" text="Color" textAlignment="CENTER">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <fx:include fx:id="layersFXML" source="layers.fxml" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="25.0" />
+   </children>
+</AnchorPane>
