@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 public class Filler extends Tool{
 
     @Override
-    public void makeAction(Canvas canvas, MouseEvent event, ToolParams toolParams) {
+    public void makeActionOnDrag(Canvas canvas, MouseEvent event, ToolParams toolParams) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Color color = toolParams.getColor();
         gc.setFill(color);

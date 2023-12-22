@@ -32,7 +32,7 @@ public class CanvasManager {
     }
 
     public void makeToolAction(MouseEvent event) {
-        tool.makeAction(selectedCanvas, event, toolParams);
+
     }
 
     public Canvas getCanvas(int position) {
@@ -40,8 +40,7 @@ public class CanvasManager {
     }
 
     public void addNewCanvasOnTop(Canvas canvas, int position) {
-        canvas.setOnMouseDragged(this::makeToolAction);
-        canvas.setOnMouseClicked(this::makeToolAction);
+        initCanvasEvents(canvas);
         if (canvases.size() == 0) {
             canvases.add(canvas);
         } else {
@@ -49,6 +48,7 @@ public class CanvasManager {
         }
         setSelectedCanvas(canvas);
     }
+
 
     public void removeSelectedCanvas() {
         int index = canvases.indexOf(selectedCanvas);
@@ -73,9 +73,9 @@ public class CanvasManager {
         selectedCanvas = canvas;
     }
 
-
-
-
+    public  Canvas getSelectedCanvas(){
+        return selectedCanvas;
+    }
 
     public void changeCanvasesSize(double width, double height) {
         this.width = width;
@@ -83,5 +83,11 @@ public class CanvasManager {
         //todo зробить зміну розмірів всіх шарів
     }
 
+    public void initCanvasEvents(Canvas canvas){
+        canvas.setOnMouseDragged( e -> tool.makeActionOnDrag(selectedCanvas, e, toolParams));
+        canvas.setOnMousePressed(e -> tool.makeActionOnPressed(selectedCanvas, e, toolParams));
+        canvas.setOnMouseReleased(e -> tool.makeActionOnReleased(selectedCanvas, e, toolParams));
+        canvas.setOnMouseClicked(e -> tool.makeActionOnClicked(selectedCanvas, e, toolParams));
+    }
 
 }

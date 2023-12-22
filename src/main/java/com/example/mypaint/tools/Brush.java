@@ -11,7 +11,7 @@ import javafx.scene.paint.Stop;
 public class Brush extends Tool{
 
     @Override
-    public void makeAction(Canvas canvas, MouseEvent event, ToolParams toolParams) {
+    public void makeActionOnDrag(Canvas canvas, MouseEvent event, ToolParams toolParams) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         double size = toolParams.getSize();
         Color color = toolParams.getColor();

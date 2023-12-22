@@ -5,5 +5,12 @@ import javafx.scene.input.MouseEvent;
 
 public abstract class Tool {
 
-    public abstract void makeAction(Canvas canvas, MouseEvent event, ToolParams toolParams);
+    public void makeActionOnDrag(Canvas canvas, MouseEvent event, ToolParams toolParams){};
+
+    public void makeActionOnPressed(Canvas canvas, MouseEvent event, ToolParams toolParams){};
+
+    public void makeActionOnReleased(Canvas canvas, MouseEvent event, ToolParams toolParams){};
+
+    public void makeActionOnClicked(Canvas canvas, MouseEvent event, ToolParams toolParams){};
+
 }

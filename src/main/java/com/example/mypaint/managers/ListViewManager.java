@@ -46,7 +46,6 @@ public class ListViewManager {
      */
     public void chooseLayer(int index) {
         layersListView.getSelectionModel().select(index);
-        System.out.println("chooseLayer: "+ index);
     }
 
 
