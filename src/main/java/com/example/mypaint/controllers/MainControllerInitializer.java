@@ -3,8 +3,7 @@ package com.example.mypaint.controllers;
 import com.example.mypaint.managers.CanvasManager;
 import com.example.mypaint.managers.ListViewManager;
 import com.example.mypaint.tools.*;
-import com.example.mypaint.utils.factory.CanvasFactory;
-import com.sun.tools.javac.Main;
+import com.example.mypaint.utils.CanvasFactory;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
@@ -40,7 +39,7 @@ public class MainControllerInitializer {
 
     private void initializeFirstLayer(){
         listViewManager.addNewLayerOnTop("Layer 0");
-        listViewManager.chooseLayer(0);
+        listViewManager.setSelectedPosition(0);
         canvasManager.addNewCanvasOnTop(CanvasFactory.createFilledCanvas(canvasManager.getWidth(), canvasManager.getHeight(), Color.WHITE), 0);
         canvasManager.setSelectedCanvas(0);
     }

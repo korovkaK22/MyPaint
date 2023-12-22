@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 public class Rubber extends Tool {
     @Override
-    public void makeActionOnDrag(Canvas canvas, MouseEvent event, ToolParams toolParams) {
+    public void makeActionOnDragged(Canvas canvas, MouseEvent event, ToolParams toolParams) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         double size = toolParams.getSize();
         double x = event.getX() - size / 2;

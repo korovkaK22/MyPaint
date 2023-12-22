@@ -5,9 +5,11 @@ import javafx.scene.control.ListView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 public class ListViewMemento {
-    private ListView<String> layersListView;
-    private ObservableList<String> list;
+    private List<String> listElements;
+    private int selectedPosition;
 }

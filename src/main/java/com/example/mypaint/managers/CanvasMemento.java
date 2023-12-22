@@ -6,10 +6,12 @@ import javafx.scene.canvas.Canvas;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 public class CanvasMemento {
-    ObservableList<Node> canvases;
+    List<Canvas> canvases;
     Canvas selectedCanvas;
     double width;
     double height;

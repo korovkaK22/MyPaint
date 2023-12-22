@@ -1,8 +1,10 @@
 package com.example.mypaint.managers;
 
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.scene.control.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ListViewManager {
@@ -44,7 +46,7 @@ public class ListViewManager {
      *
      * @param index індекс вибраного елементу
      */
-    public void chooseLayer(int index) {
+    public void setSelectedPosition(int index) {
         layersListView.getSelectionModel().select(index);
     }
 
@@ -57,11 +59,11 @@ public class ListViewManager {
         int index = getSelectedItemPosition();
         list.remove(index);
         if (list.isEmpty()) {
-            chooseLayer(-1);
+            setSelectedPosition(-1);
         } else if (index < list.size()) {
-            chooseLayer(index);
+            setSelectedPosition(index);
         } else {
-            chooseLayer(index - 1);
+            setSelectedPosition(index - 1);
         }
     }
 
@@ -76,6 +78,17 @@ public class ListViewManager {
 
     public int getSelectedItemPositionReverse() {
         return list.size()-1- layersListView.getSelectionModel().getSelectedIndex();
+    }
+
+    public ListViewMemento getMemento(){
+        List<String> listElements = new ArrayList<>(list);
+        return new ListViewMemento(listElements, getSelectedItemPosition());
+    }
+
+    public void setMemento(ListViewMemento memento){
+        list.clear();
+        list.addAll(memento.getListElements());
+        setSelectedPosition(memento.getSelectedPosition());
     }
 
 

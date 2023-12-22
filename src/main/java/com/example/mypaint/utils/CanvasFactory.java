@@ -1,4 +1,4 @@
-package com.example.mypaint.utils.factory;
+package com.example.mypaint.utils;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

@@ -27,8 +27,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="editUndo" mnemonicParsing="false" text="Undo" />
-                  <MenuItem fx:id="editRedo" mnemonicParsing="false" text="Redo" />
+              <MenuItem fx:id="editUndo" mnemonicParsing="false" onAction="#editUndo" text="Undo" />
+                  <MenuItem fx:id="editRedo" mnemonicParsing="false" onAction="#editRedo" text="Redo" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Effects (Online)">
@@ -47,13 +47,7 @@
          <content>
             <fx:include fx:id="canvasesFXML" source="canvas.fxml" />
          </content></ScrollPane>
-      <MenuButton id="toolButton" fx:id="toolsButton" layoutX="4.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" text="Pencil" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="41.0">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Pencil" />
-          <MenuItem mnemonicParsing="false" text="Rubber" />
-            <MenuItem mnemonicParsing="false" text="Move" />
-        </items>
-      </MenuButton>
+      <MenuButton id="toolButton" fx:id="toolsButton" layoutX="4.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" text="Pencil" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="41.0" />
       <Separator layoutX="-1.0" layoutY="68.0" prefHeight="11.0" prefWidth="943.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" />
       <ColorPicker fx:id="colorPicker" layoutX="262.0" layoutY="41.0" prefHeight="26.0" prefWidth="41.0" AnchorPane.leftAnchor="262.0" AnchorPane.topAnchor="41.0">
          <value>

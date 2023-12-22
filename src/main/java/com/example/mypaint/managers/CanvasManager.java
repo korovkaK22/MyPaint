@@ -2,12 +2,18 @@ package com.example.mypaint.managers;
 
 import com.example.mypaint.tools.ToolParams;
 import com.example.mypaint.tools.Tool;
+import com.example.mypaint.utils.CanvasUtil;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class CanvasManager {
     @Getter
@@ -29,10 +35,6 @@ public class CanvasManager {
     public CanvasManager(ObservableList<Node> canvases, Tool tool) {
         this.canvases = canvases;
         this.tool = tool;
-    }
-
-    public void makeToolAction(MouseEvent event) {
-
     }
 
     public Canvas getCanvas(int position) {
@@ -73,8 +75,27 @@ public class CanvasManager {
         selectedCanvas = canvas;
     }
 
-    public  Canvas getSelectedCanvas(){
+    public Canvas getSelectedCanvas(){
         return selectedCanvas;
+    }
+
+    public CanvasMemento getMemento(){
+        List<Canvas> list = new ArrayList<>();
+        canvases.forEach(e -> {
+            Canvas canvas = CanvasUtil.getCanvasCopyWithoutEvents((Canvas) e);
+            initCanvasEvents(canvas);
+            list.add(canvas);
+        });
+        return new CanvasMemento(list, list.get(canvases.indexOf(getSelectedCanvas())), width,height );
+    }
+
+    public void setMemento(CanvasMemento memento){
+        List<Canvas> list = memento.getCanvases();
+        canvases.clear();
+        canvases.addAll(list);
+        setSelectedCanvas(memento.getSelectedCanvas());
+        width = memento.width;
+        height = memento.height;
     }
 
     public void changeCanvasesSize(double width, double height) {
@@ -84,7 +105,7 @@ public class CanvasManager {
     }
 
     public void initCanvasEvents(Canvas canvas){
-        canvas.setOnMouseDragged( e -> tool.makeActionOnDrag(selectedCanvas, e, toolParams));
+        canvas.setOnMouseDragged( e -> tool.makeActionOnDragged(selectedCanvas, e, toolParams));
         canvas.setOnMousePressed(e -> tool.makeActionOnPressed(selectedCanvas, e, toolParams));
         canvas.setOnMouseReleased(e -> tool.makeActionOnReleased(selectedCanvas, e, toolParams));
         canvas.setOnMouseClicked(e -> tool.makeActionOnClicked(selectedCanvas, e, toolParams));
