@@ -46,17 +46,10 @@ public class ListViewManager {
      */
     public void chooseLayer(int index) {
         layersListView.getSelectionModel().select(index);
-        System.out.println("chooseLayer: "+ index); //==========
+        System.out.println("chooseLayer: "+ index);
     }
 
-    /**
-     * Видалити шар на конкретній позиції
-     *
-     * @param index
-     */
-    public void removeLayer(int index) {
-        list.remove(index);
-    }
+
 
     /**
      * видалити вибраний шар
@@ -65,13 +58,10 @@ public class ListViewManager {
         int index = getSelectedItemPosition();
         list.remove(index);
         if (list.isEmpty()) {
-            // Якщо список шарів порожній після видалення
-            chooseLayer(-1); // Припускаючи, що chooseLayer може обробляти випадок -1 як "нічого не вибрано"
+            chooseLayer(-1);
         } else if (index < list.size()) {
-            // Якщо індекс досі в межах списку, вибрати шар за цим індексом
             chooseLayer(index);
         } else {
-            // Якщо індекс зараз за межами списку (видалили останній шар), вибрати попередній шар
             chooseLayer(index - 1);
         }
     }

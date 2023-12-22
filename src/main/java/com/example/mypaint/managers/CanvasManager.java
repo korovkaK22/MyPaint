@@ -41,6 +41,7 @@ public class CanvasManager {
 
     public void addNewCanvasOnTop(Canvas canvas, int position) {
         canvas.setOnMouseDragged(this::makeToolAction);
+        canvas.setOnMouseClicked(this::makeToolAction);
         if (canvases.size() == 0) {
             canvases.add(canvas);
         } else {
@@ -51,23 +52,19 @@ public class CanvasManager {
 
     public void removeSelectedCanvas() {
         int index = canvases.indexOf(selectedCanvas);
-        // Видалення поточного selectedCanvas
         canvases.remove(selectedCanvas);
 
         if (canvases.isEmpty()) {
-            selectedCanvas = null; // Немає доступних Canvas
+            selectedCanvas = null;
         } else if (index < canvases.size()) {
-            // Якщо поточний індекс досі в межах списку після видалення
             selectedCanvas = (Canvas) canvases.get(index);
         } else {
-            // Якщо поточний індекс виходить за межі списку (selectedCanvas був останнім), вибираємо попередній
             selectedCanvas = (Canvas) canvases.get(index - 1);
         }
     }
 
     public void setSelectedCanvas(int position) {
         if (canvases.size() != 0) {
-            System.out.println("Канвас поміняно на: " + canvases.get(position)); //============
             selectedCanvas = (Canvas) canvases.get(position);
         }
     }
@@ -77,14 +74,8 @@ public class CanvasManager {
     }
 
 
-    public void addNewCanvasOnTop(Canvas canvas) {
-        canvas.setOnMouseDragged(this::makeToolAction);
-        canvases.add(canvas);
-    }
 
-    public void removeCanvas(int position) {
-        canvases.remove(position);
-    }
+
 
     public void changeCanvasesSize(double width, double height) {
         this.width = width;

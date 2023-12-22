@@ -2,8 +2,7 @@ package com.example.mypaint.controllers;
 
 import com.example.mypaint.managers.ListViewManager;
 import com.example.mypaint.managers.CanvasManager;
-import com.example.mypaint.tools.Pencil;
-import com.example.mypaint.tools.ToolParams;
+import com.example.mypaint.tools.*;
 import com.example.mypaint.utils.factory.CanvasFactory;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -70,7 +69,7 @@ public class MainController implements Initializable {
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {
                 listViewManager = new ListViewManager(layersFXMLController.getLayersListView());
-                canvasManager = new CanvasManager(canvasesFXMLController.getMainStackPane().getChildren(), new Pencil()); //==============
+                canvasManager = new CanvasManager(canvasesFXMLController.getMainStackPane().getChildren(), new Brush()); //==============
 
                 layersFXMLController.setCanvasManager(canvasManager);
                 canvasesFXMLController.setCanvasManager(canvasManager);
@@ -80,6 +79,7 @@ public class MainController implements Initializable {
                 initSizeChooser();
                 initializeFirstLayer();
                 initColorPicker();
+                initToolPicker();
         }
 
 
@@ -88,7 +88,7 @@ public class MainController implements Initializable {
         private void initializeFirstLayer(){
                 listViewManager.addNewLayerOnTop("Шар 0");
                 listViewManager.chooseLayer(0);
-                canvasManager.addNewCanvasOnTop(CanvasFactory.createFilledCanvas(canvasManager.getWidth(), canvasManager.getHeight(), Color.WHITE));
+                canvasManager.addNewCanvasOnTop(CanvasFactory.createFilledCanvas(canvasManager.getWidth(), canvasManager.getHeight(), Color.WHITE), 0);
                 canvasManager.setSelectedCanvas(0);
         }
 
@@ -102,7 +102,7 @@ public class MainController implements Initializable {
                 sizeChooser.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                         canvasManager.getToolParams().setSize(newValue * 2);
                 });
-                sizeChooser.setValue(2);
+                sizeChooser.setValue(5);
         }
 
         private void initColorPicker(){
@@ -111,6 +111,31 @@ public class MainController implements Initializable {
                 });
         }
 
+        private void initToolPicker(){
+                MenuItem item1 = new MenuItem("Pencil");
+                item1.setOnAction(e -> {canvasManager.setTool(new Pencil());
+                        toolsButton.setText(item1.getText());
+                });
+                MenuItem item2 = new MenuItem("Rubber");
+                item2.setOnAction(e -> {canvasManager.setTool(new Rubber());
+                        toolsButton.setText(item2.getText());
+                });
+                MenuItem item3 = new MenuItem("Filler");
+                item3.setOnAction(e -> {canvasManager.setTool(new Filler());
+                        toolsButton.setText(item3.getText());
+                });
+                MenuItem item4 = new MenuItem("Mover");
+                item4.setOnAction(e -> {canvasManager.setTool(new Mover());
+                        toolsButton.setText(item4.getText());
+                });
+                MenuItem item5 = new MenuItem("Brush");
+                item5.setOnAction(e -> {canvasManager.setTool(new Brush());
+                        toolsButton.setText(item5.getText());
+                });
+
+                toolsButton.getItems().addAll(item1, item2, item3, item4, item5);
+                toolsButton.setText(item5.getText());
+        }
 
 }
 
