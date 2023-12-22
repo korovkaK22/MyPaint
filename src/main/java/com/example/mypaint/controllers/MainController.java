@@ -79,6 +79,7 @@ public class MainController implements Initializable {
 
                 initSizeChooser();
                 initializeFirstLayer();
+                initColorPicker();
         }
 
 
@@ -98,8 +99,18 @@ public class MainController implements Initializable {
                 for (int i = 1; i <= 10; i++) {
                         items.add(i);
                 }
-                sizeChooser.setValue(1);
+                sizeChooser.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                        canvasManager.getToolParams().setSize(newValue * 2);
+                });
+                sizeChooser.setValue(2);
         }
+
+        private void initColorPicker(){
+                colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        canvasManager.getToolParams().setColor(newValue);
+                });
+        }
+
 
 }
 

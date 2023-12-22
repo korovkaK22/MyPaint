@@ -5,9 +5,7 @@ import com.example.mypaint.tools.Tool;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,9 +39,14 @@ public class CanvasManager {
         return (Canvas) canvases.get(position);
     }
 
-    public void addNewCanvas(Canvas canvas, int position) {
+    public void addNewCanvasOnTop(Canvas canvas, int position) {
         canvas.setOnMouseDragged(this::makeToolAction);
-        canvases.add(position, canvas);
+        if (canvases.size() == 0) {
+            canvases.add(canvas);
+        } else {
+            canvases.add(position+1, canvas);
+        }
+        setSelectedCanvas(canvas);
     }
 
     public void removeSelectedCanvas() {
@@ -64,9 +67,13 @@ public class CanvasManager {
 
     public void setSelectedCanvas(int position) {
         if (canvases.size() != 0) {
-            System.out.println("Канвас поміняно на: "+ position);
+            System.out.println("Канвас поміняно на: " + canvases.get(position)); //============
             selectedCanvas = (Canvas) canvases.get(position);
         }
+    }
+
+    public void setSelectedCanvas(Canvas canvas) {
+        selectedCanvas = canvas;
     }
 
 

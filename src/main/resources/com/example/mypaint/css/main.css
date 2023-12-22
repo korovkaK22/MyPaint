@@ -1,11 +1,7 @@
-
-
 #mainStackPane{
     -fx-border-color: black;
     -fx-border-width: 0.5;
-    -webkit-box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75);
-    box-shadow: 4px 4px 10px -1px rgba(0,0,0,0.75);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.75), 10, 0, 4, 4);
 }
 
 .shadow-effect {

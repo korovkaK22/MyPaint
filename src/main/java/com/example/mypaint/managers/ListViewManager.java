@@ -8,7 +8,7 @@ import javafx.scene.control.ListView;
 public class ListViewManager {
     private final ListView<String> layersListView;
     private ObservableList<String> list;
-    private SortedList<String> sortedList;
+
 
 
     public ListViewManager(ListView<String> layersListView) {
@@ -46,6 +46,7 @@ public class ListViewManager {
      */
     public void chooseLayer(int index) {
         layersListView.getSelectionModel().select(index);
+        System.out.println("chooseLayer: "+ index); //==========
     }
 
     /**
@@ -81,7 +82,16 @@ public class ListViewManager {
      * @return позиція, якщо return -1, то позиція не вибрана
      */
     public int getSelectedItemPosition() {
-        return layersListView.getSelectionModel().getSelectedIndex();
+        return  layersListView.getSelectionModel().getSelectedIndex();
+    }
+
+    public int getSelectedItemPositionReverse() {
+        return list.size()-1- layersListView.getSelectionModel().getSelectedIndex();
+    }
+
+
+    public int getSize(){
+        return list.size();
     }
 
 }
