@@ -11,6 +11,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
@@ -20,7 +21,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem fx:id="fileOpen" mnemonicParsing="false" text="Open" />
+              <MenuItem fx:id="fileOpen" mnemonicParsing="false" onAction="#fileOpen" text="Open" />
                   <MenuItem fx:id="fileSave" mnemonicParsing="false" text="Save" />
                   <MenuItem fx:id="fileSaveAs" mnemonicParsing="false" text="Save as" />
             </items>
@@ -45,7 +46,7 @@
       </MenuBar>
       <ScrollPane fx:id="canvasScrollPanel" layoutX="6.0" layoutY="79.0" prefHeight="620.0" prefWidth="922.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="79.0">
          <content>
-            <fx:include fx:id="canvasesFXML" source="canvas.fxml" />
+            <StackPane fx:id="mainStackPane" prefHeight="150.0" prefWidth="200.0" />
          </content></ScrollPane>
       <MenuButton id="toolButton" fx:id="toolsButton" layoutX="4.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" text="Pencil" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="41.0" />
       <Separator layoutX="-1.0" layoutY="68.0" prefHeight="11.0" prefWidth="943.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" />

@@ -1,10 +1,12 @@
 package com.example.mypaint.controllers;
 
+import com.example.mypaint.actions.UserActionHolder;
 import com.example.mypaint.managers.CanvasManager;
 import com.example.mypaint.managers.ListViewManager;
 import com.example.mypaint.tools.*;
 import com.example.mypaint.utils.CanvasFactory;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.MenuButton;
@@ -13,28 +15,41 @@ import javafx.scene.paint.Color;
 
 
 public class MainControllerInitializer {
-    private MainController controller;
-    private ListViewManager listViewManager;
-    private CanvasManager canvasManager;
-    private MenuButton toolsButton;
-    private ChoiceBox<Integer> sizeChooser;
-    private ColorPicker colorPicker;
+    private final UserActionHolder userActionHolder;
+    private final MainController controller;
+    private final ListViewManager listViewManager;
+    private final CanvasManager canvasManager;
+    private final MenuButton toolsButton;
+    private final ChoiceBox<Integer> sizeChooser;
+    private final ColorPicker colorPicker;
+    private final MenuItem editRedo;
+    private final MenuItem editUndo;
 
-    public MainControllerInitializer(MainController controller) {
+    public MainControllerInitializer(MainController controller, UserActionHolder userActionHolder) {
+        this.userActionHolder = userActionHolder;
         this.controller = controller;
         this.listViewManager = controller.getListViewManager();
         this.canvasManager = controller.getCanvasManager();
         this.toolsButton = controller.getToolsButton();
         this.sizeChooser = controller.getSizeChooser();
         this.colorPicker = controller.getColorPicker();
+        this.editRedo = controller.getEditRedo();
+        this.editUndo = controller.getEditUndo();
         init();
     }
 
     private void init(){
+        userActionHolder.addUserAction();
         initSizeChooser();
         initializeFirstLayer();
         initColorPicker();
         initToolPicker();
+        initUndoRedoMenu();
+    }
+
+    private void initUndoRedoMenu() {
+        editUndo.disableProperty().bind(userActionHolder.undoAvailableProperty().not());
+        editRedo.disableProperty().bind(userActionHolder.redoAvailableProperty().not());
     }
 
     private void initializeFirstLayer(){
@@ -62,13 +77,15 @@ public class MainControllerInitializer {
     }
 
     private void initToolPicker(){
-        addToolToButton("Pencil", new Pencil());
-        addToolToButton("Rubber", new Rubber());
-        addToolToButton("Filler", new Filler());
-        addToolToButton("Brush",  new Brush());
-        addToolToButton("1111",  new Mover());
+        addToolToButton("Pencil", new Pencil(userActionHolder));
+        addToolToButton("Rubber", new Rubber(userActionHolder));
+        addToolToButton("Filler", new Filler(userActionHolder));
+        Brush brush = new Brush(userActionHolder);
+        addToolToButton("Brush", brush );
+        canvasManager.setTool(brush);
+        addToolToButton("1111",  new Mover(userActionHolder));
+        toolsButton.setText(toolsButton.getItems().get(3).getText());
 
-        toolsButton.setText(toolsButton.getItems().get(4).getText());
     }
 
     private void addToolToButton(String name, Tool tool){

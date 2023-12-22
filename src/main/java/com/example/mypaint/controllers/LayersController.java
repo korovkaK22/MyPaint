@@ -1,5 +1,6 @@
 package com.example.mypaint.controllers;
 
+import com.example.mypaint.actions.UserActionHolder;
 import com.example.mypaint.managers.CanvasManager;
 import com.example.mypaint.managers.CanvasMemento;
 import com.example.mypaint.managers.ListViewManager;
@@ -22,14 +23,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LayersController implements Initializable {
-    @Getter
-    @Setter
+    @Getter @Setter
     private ListViewManager listViewManager;
-    @Getter
-    @Setter
+    @Getter @Setter
     private CanvasManager canvasManager;
-    @Getter
-    @Setter
+    @Getter @Setter
+    private UserActionHolder userActionHolder;
+    @Getter @Setter
     private Stage stage;
     private int layerId = 1;
 
@@ -54,14 +54,15 @@ public class LayersController implements Initializable {
      */
     public void addNewLayerAction() {
         Canvas canvas = CanvasFactory.createTransparentCanvas(canvasManager.getWidth(), canvasManager.getHeight());
-        addNewLayerAction(canvas);
+        addNewLayer(canvas);
+
     }
 
-    public void addNewLayerAction(Canvas canvas) {
+    public void addNewLayer(Canvas canvas) {
         int position = Math.max(0, listViewManager.getSelectedItemPosition());
         listViewManager.addNewLayerOnTop("Layer " + layerId++);
         canvasManager.addNewCanvasOnTop(canvas, listViewManager.getSelectedItemPositionReverse());
-        listViewManager.setSelectedPosition(position);
+
     }
 
 
@@ -71,6 +72,7 @@ public class LayersController implements Initializable {
     public void removeLayer() {
         canvasManager.removeSelectedCanvas();
         listViewManager.removeSelectedLayer();
+
     }
 
 
@@ -83,25 +85,13 @@ public class LayersController implements Initializable {
         }
         Canvas selectedCanvas = canvasManager.getSelectedCanvas();
         Canvas newCanvas = CanvasUtil.getCanvasCopyWithoutEvents(selectedCanvas);
-        addNewLayerAction(newCanvas);
+        addNewLayer(newCanvas);
+
     }
 
-    CanvasMemento canvasMemento;
-    ListViewMemento listViewMemento;
+
 
     public void connectLayers() {
-        if (canvasMemento != null) {
-            canvasManager.setMemento(canvasMemento);
-            listViewManager.setMemento(listViewMemento);
-            canvasMemento = null;
-            listViewMemento = null;
-            System.out.println("сет мементо");
-        } else {
-            canvasMemento = canvasManager.getMemento();
-            listViewMemento = listViewManager.getMemento();
-            System.out.println("гет мементо");
-        }
-
 
         Canvas selectedCanvas = canvasManager.getSelectedCanvas();
         GraphicsContext gc = selectedCanvas.getGraphicsContext2D();

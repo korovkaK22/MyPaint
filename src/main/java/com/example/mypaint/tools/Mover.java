@@ -1,5 +1,6 @@
 package com.example.mypaint.tools;
 
+import com.example.mypaint.actions.UserActionHolder;
 import com.example.mypaint.managers.CanvasMemento;
 import javafx.event.EventType;
 import javafx.scene.canvas.Canvas;
@@ -9,6 +10,10 @@ import javafx.scene.input.MouseEvent;
 
 public class Mover extends Tool {
 
+
+    public Mover(UserActionHolder userActionHolder) {
+        super(userActionHolder);
+    }
 
     @Override
     public void makeActionOnDragged(Canvas canvas, MouseEvent event, ToolParams toolParams) {

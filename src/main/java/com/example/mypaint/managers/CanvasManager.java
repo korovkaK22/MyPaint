@@ -32,9 +32,8 @@ public class CanvasManager {
     @Setter
     private double height = 500;
 
-    public CanvasManager(ObservableList<Node> canvases, Tool tool) {
+    public CanvasManager(ObservableList<Node> canvases) {
         this.canvases = canvases;
-        this.tool = tool;
     }
 
     public Canvas getCanvas(int position) {
@@ -86,7 +85,9 @@ public class CanvasManager {
             initCanvasEvents(canvas);
             list.add(canvas);
         });
-        return new CanvasMemento(list, list.get(canvases.indexOf(getSelectedCanvas())), width,height );
+
+
+        return new CanvasMemento(list, selectedCanvas == null? null: list.get(canvases.indexOf(selectedCanvas)), width,height );
     }
 
     public void setMemento(CanvasMemento memento){

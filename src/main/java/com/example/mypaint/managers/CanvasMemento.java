@@ -15,5 +15,4 @@ public class CanvasMemento {
     Canvas selectedCanvas;
     double width;
     double height;
-
 }

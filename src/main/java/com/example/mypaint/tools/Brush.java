@@ -1,5 +1,6 @@
 package com.example.mypaint.tools;
 
+import com.example.mypaint.actions.UserActionHolder;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
@@ -9,6 +10,11 @@ import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 
 public class Brush extends Tool{
+
+    public Brush(UserActionHolder userActionHolder) {
+        super(userActionHolder);
+    }
+
 
     @Override
     public void makeActionOnDragged(Canvas canvas, MouseEvent event, ToolParams toolParams) {
