@@ -28,9 +28,7 @@ public class UserActionHolder {
         if (queue.size() == MAX_SIZE) {
             queue.removeFirst();
         }
-
         UserAction action = new UserAction(canvasManager.getMemento(), listViewManager.getMemento());
-        System.out.println("Нова дія: " + action); //==============
         undoActionQueue.clear();
         queue.addLast(action);
         updateButtonAvailability();
@@ -45,12 +43,9 @@ public class UserActionHolder {
             }
             UserAction action = queue.removeLast();
             UserAction prewAction = queue.getLast();
-
             undoActionQueue.addLast(action);
-
             setToManagersLastMemento(prewAction);
             updateButtonAvailability();
-            System.out.println("Ундо до дії: "+prewAction); //==============
         }
     }
 
@@ -60,7 +55,6 @@ public class UserActionHolder {
             queue.addLast(action);
             setToManagersLastMemento(action);
             updateButtonAvailability();
-            System.out.println("Редо до дії: "+action); //==============
         }
     }
 

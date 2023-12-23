@@ -53,16 +53,16 @@ public class LayersController implements Initializable {
      * Метод викликається кнопкою, створення нового шару поверх попереднього
      */
     public void addNewLayerAction() {
+        userActionHolder.addUserAction();
+        int position = Math.max(0, listViewManager.getSelectedItemPosition());
         Canvas canvas = CanvasFactory.createTransparentCanvas(canvasManager.getWidth(), canvasManager.getHeight());
         addNewLayer(canvas);
-
+        listViewManager.setSelectedPosition(position);
     }
 
     public void addNewLayer(Canvas canvas) {
-        int position = Math.max(0, listViewManager.getSelectedItemPosition());
         listViewManager.addNewLayerOnTop("Layer " + layerId++);
         canvasManager.addNewCanvasOnTop(canvas, listViewManager.getSelectedItemPositionReverse());
-
     }
 
 
@@ -70,9 +70,9 @@ public class LayersController implements Initializable {
      * Метод викликається кнопкою, видалення вибраного шару
      */
     public void removeLayer() {
+        userActionHolder.addUserAction();
         canvasManager.removeSelectedCanvas();
         listViewManager.removeSelectedLayer();
-
     }
 
 
@@ -80,42 +80,21 @@ public class LayersController implements Initializable {
      * Метод викликається кнопкою, клонування вибраного шару
      */
     public void duplicateSelectedLayer() {
+        userActionHolder.addUserAction();
         if (listViewManager.getSelectedItemPosition() == -1) {
             return;
         }
         Canvas selectedCanvas = canvasManager.getSelectedCanvas();
         Canvas newCanvas = CanvasUtil.getCanvasCopyWithoutEvents(selectedCanvas);
         addNewLayer(newCanvas);
-
     }
 
 
 
     public void connectLayers() {
 
-        Canvas selectedCanvas = canvasManager.getSelectedCanvas();
-        GraphicsContext gc = selectedCanvas.getGraphicsContext2D();
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose image");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webm")
-        );
-
-        // Відкриття діалогового вікна для вибору файлу
-        File file = fileChooser.showOpenDialog(stage);
-
-        if (file != null) {
-            try {
-                // Завантаження та малювання вибраного зображення на канвасі
-                Image image = new Image(file.toURI().toString());
-                gc.drawImage(image, 0, 0, selectedCanvas.getWidth(), selectedCanvas.getHeight());
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Помилка при завантаженні зображення: " + e.getMessage());
-            }
-        }
     }
+
 
 
 }

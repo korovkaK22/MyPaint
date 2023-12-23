@@ -3,16 +3,18 @@ package com.example.mypaint.managers;
 import com.example.mypaint.tools.ToolParams;
 import com.example.mypaint.tools.Tool;
 import com.example.mypaint.utils.CanvasUtil;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 
 public class CanvasManager {
@@ -45,7 +47,7 @@ public class CanvasManager {
         if (canvases.size() == 0) {
             canvases.add(canvas);
         } else {
-            canvases.add(position+1, canvas);
+            canvases.add(position + 1, canvas);
         }
         setSelectedCanvas(canvas);
     }
@@ -74,11 +76,11 @@ public class CanvasManager {
         selectedCanvas = canvas;
     }
 
-    public Canvas getSelectedCanvas(){
+    public Canvas getSelectedCanvas() {
         return selectedCanvas;
     }
 
-    public CanvasMemento getMemento(){
+    public CanvasMemento getMemento() {
         List<Canvas> list = new ArrayList<>();
         canvases.forEach(e -> {
             Canvas canvas = CanvasUtil.getCanvasCopyWithoutEvents((Canvas) e);
@@ -87,10 +89,10 @@ public class CanvasManager {
         });
 
 
-        return new CanvasMemento(list, selectedCanvas == null? null: list.get(canvases.indexOf(selectedCanvas)), width,height );
+        return new CanvasMemento(list, selectedCanvas == null ? null : list.get(canvases.indexOf(selectedCanvas)), width, height);
     }
 
-    public void setMemento(CanvasMemento memento){
+    public void setMemento(CanvasMemento memento) {
         List<Canvas> list = memento.getCanvases();
         canvases.clear();
         canvases.addAll(list);
@@ -102,14 +104,54 @@ public class CanvasManager {
     public void changeCanvasesSize(double width, double height) {
         this.width = width;
         this.height = height;
-        //todo зробить зміну розмірів всіх шарів
+        int position = canvases.indexOf(selectedCanvas);
+        List<Canvas> list = new ArrayList<>();
+        canvases.forEach(e -> {
+            Canvas canvas = CanvasUtil.resizeCanvasWithoutEvents((Canvas) e, width, height);
+            initCanvasEvents(canvas);
+            list.add(canvas);
+        });
+        canvases.clear();
+        canvases.addAll(list);
+        setSelectedCanvas(list.get(position));
     }
 
-    public void initCanvasEvents(Canvas canvas){
-        canvas.setOnMouseDragged( e -> tool.makeActionOnDragged(selectedCanvas, e, toolParams));
-        canvas.setOnMousePressed(e -> tool.makeActionOnPressed(selectedCanvas, e, toolParams));
-        canvas.setOnMouseReleased(e -> tool.makeActionOnReleased(selectedCanvas, e, toolParams));
-        canvas.setOnMouseClicked(e -> tool.makeActionOnClicked(selectedCanvas, e, toolParams));
+    public List<Canvas> getCanvases() {
+        List<Canvas> result = new ArrayList<>();
+        canvases.forEach(e -> result.add((Canvas) e));
+        return result;
     }
 
-}
+    public int canvasNumber() {
+        return canvases.size();
+    }
+
+
+    /**
+     * Передивляється розміри канвасу, якщо вони більші, ніж у всіх інших, підганяє інші канваси по розміру
+     *
+     * @param canvas Канвас для перевірки
+     * @param toCanvasSize чи зменшувати розмір під зображення
+     */
+    public void verifySizes(Canvas canvas, boolean toCanvasSize) {
+        double canvasWidth = canvas.getWidth();
+        double canvasHeight = canvas.getHeight();
+            if (toCanvasSize) {
+                changeCanvasesSize(canvasWidth, canvasHeight);
+            } else {
+                changeCanvasesSize(Math.max(canvasWidth, width), Math.max(canvasHeight, height));
+            }
+        }
+
+        public void verifySizes(Canvas canvas){
+            verifySizes(canvas, false);
+        }
+
+        public void initCanvasEvents (Canvas canvas){
+            canvas.setOnMouseDragged(e -> tool.makeActionOnDragged(selectedCanvas, e, toolParams));
+            canvas.setOnMousePressed(e -> tool.makeActionOnPressed(selectedCanvas, e, toolParams));
+            canvas.setOnMouseReleased(e -> tool.makeActionOnReleased(selectedCanvas, e, toolParams));
+            canvas.setOnMouseClicked(e -> tool.makeActionOnClicked(selectedCanvas, e, toolParams));
+        }
+
+    }

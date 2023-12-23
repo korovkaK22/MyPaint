@@ -83,7 +83,6 @@ public class MainControllerInitializer {
         Brush brush = new Brush(userActionHolder);
         addToolToButton("Brush", brush );
         canvasManager.setTool(brush);
-        addToolToButton("1111",  new Mover(userActionHolder));
         toolsButton.setText(toolsButton.getItems().get(3).getText());
 
     }

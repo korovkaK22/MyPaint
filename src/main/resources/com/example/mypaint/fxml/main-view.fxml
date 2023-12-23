@@ -22,8 +22,7 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem fx:id="fileOpen" mnemonicParsing="false" onAction="#fileOpen" text="Open" />
-                  <MenuItem fx:id="fileSave" mnemonicParsing="false" text="Save" />
-                  <MenuItem fx:id="fileSaveAs" mnemonicParsing="false" text="Save as" />
+                  <MenuItem fx:id="fileSaveAs" mnemonicParsing="false" onAction="#fileSaveAs" text="Save as" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -34,7 +33,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Effects (Online)">
             <items>
-              <MenuItem fx:id="effectRotate" mnemonicParsing="false" text="Rotate" />
+              <MenuItem fx:id="effectRotate" mnemonicParsing="false" onAction="#effectRotate" text="Rotate" />
                   <MenuItem fx:id="effectSize" mnemonicParsing="false" text="Size" />
                   <MenuItem fx:id="effectDarkness" mnemonicParsing="false" text="Darkness" />
             </items>
@@ -46,7 +45,7 @@
       </MenuBar>
       <ScrollPane fx:id="canvasScrollPanel" layoutX="6.0" layoutY="79.0" prefHeight="620.0" prefWidth="922.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="79.0">
          <content>
-            <StackPane fx:id="mainStackPane" prefHeight="150.0" prefWidth="200.0" />
+            <StackPane fx:id="mainStackPane" prefHeight="0.0" prefWidth="1.0" />
          </content></ScrollPane>
       <MenuButton id="toolButton" fx:id="toolsButton" layoutX="4.0" layoutY="41.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="87.0" text="Pencil" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="41.0" />
       <Separator layoutX="-1.0" layoutY="68.0" prefHeight="11.0" prefWidth="943.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" />

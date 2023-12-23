@@ -12,23 +12,21 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-
-
 public class PaintSceneApplication extends Application {
-
-
+    private int WINDOW_HEIGHT = 720;
+    private int WINDOW_WIDTH = 1080;
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader mainView = new FXMLLoader(PaintSceneApplication.class.getResource("fxml/main-view.fxml"));
-        Scene scene = new Scene(mainView.load(), 1080, 720);
+        Scene scene = new Scene(mainView.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
         String css = this.getClass().getResource("css/main.css").toExternalForm();
         scene.getStylesheets().add(css);
 
         MainController mainController = mainView.getController();
         mainController.setStage(stage);
 
-        stage.setTitle("Paint");
+        stage.setTitle("MyPaint");
         stage.setScene(scene);
         stage.show();
     }
