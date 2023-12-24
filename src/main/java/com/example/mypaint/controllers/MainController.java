@@ -1,28 +1,39 @@
 package com.example.mypaint.controllers;
 
 import com.example.mypaint.PaintApplication;
+import com.example.mypaint.PaintSceneApplication;
 import com.example.mypaint.actions.UserActionHolder;
+import com.example.mypaint.controllers.dialogwindows.DialogWindowFourParameters;
+import com.example.mypaint.controllers.dialogwindows.DialogWindowTwoParameters;
+import com.example.mypaint.facade.EffectsFacade;
 import com.example.mypaint.managers.ListViewManager;
 import com.example.mypaint.managers.CanvasManager;
 import com.example.mypaint.utils.CanvasFactory;
 import com.example.mypaint.utils.CanvasUtil;
 import com.example.mypaint.utils.FileUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
 
 public class MainController implements Initializable {
 
@@ -64,6 +75,8 @@ public class MainController implements Initializable {
     @Getter
     @Setter
     private Stage stage;
+    @Setter
+    EffectsFacade effectsFacade;
 
 
     @Override
@@ -150,17 +163,71 @@ public class MainController implements Initializable {
     public void effectRotate() {
         userActionHolder.addUserAction();
         Canvas selectedCanvas = canvasManager.getSelectedCanvas();
-        WritableImage result = PaintApplication.getWebCanvasEffects().rotate(CanvasUtil.getImage(selectedCanvas));
+        WritableImage result = effectsFacade.rotate(CanvasUtil.getImage(selectedCanvas));
         addImageToCanvasAndVerify(result, selectedCanvas);
+    }
+
+    public void effectSize() throws IOException {
+        userActionHolder.addUserAction();
+        FXMLLoader loader = new FXMLLoader(PaintSceneApplication.class.getResource("fxml/dialogWindowTwoParameters.fxml"));
+        Parent root = loader.load();
+        DialogWindowTwoParameters controller = loader.getController();
+        controller.setAction((width, height) -> {
+            Canvas selectedCanvas = canvasManager.getSelectedCanvas();
+            WritableImage result = effectsFacade.resizeImage(CanvasUtil.getImage(selectedCanvas), width, height);
+            addImageToCanvasAndVerify(result, selectedCanvas);
+        });
+        openDialogWindowOnStage(root);
+    }
+
+    public void effectCanvasSize() throws IOException {
+        userActionHolder.addUserAction();
+        FXMLLoader loader = new FXMLLoader(PaintSceneApplication.class.getResource("fxml/dialogWindowTwoParameters.fxml"));
+        Parent root = loader.load();
+        DialogWindowTwoParameters controller = loader.getController();
+        controller.setAction((width, height) -> {
+            Canvas selectedCanvas = canvasManager.getSelectedCanvas();
+            WritableImage result = effectsFacade.changeCanvasSize(CanvasUtil.getImage(selectedCanvas), width, height);
+            addImageToCanvasAndVerify(result, selectedCanvas);
+        });
+        openDialogWindowOnStage(root);
+    }
+
+    public void cropImage() throws IOException {
+        userActionHolder.addUserAction();
+        FXMLLoader loader = new FXMLLoader(PaintSceneApplication.class.getResource("fxml/dialogWindowFourParameters.fxml"));
+        Parent root = loader.load();
+        DialogWindowFourParameters controller = loader.getController();
+        controller.setAction((x1, y1, x2, y2) -> {
+            Canvas selectedCanvas = canvasManager.getSelectedCanvas();
+            WritableImage result = effectsFacade.cropImage(CanvasUtil.getImage(selectedCanvas), x1, y1, x2, y2);
+            addImageToCanvasAndVerify(result, selectedCanvas);
+        });
+        openDialogWindowOnStage(root);
+    }
+
+    public void moveImage() throws IOException {
+        userActionHolder.addUserAction();
+        FXMLLoader loader = new FXMLLoader(PaintSceneApplication.class.getResource("fxml/dialogWindowTwoParameters.fxml"));
+        Parent root = loader.load();
+        DialogWindowTwoParameters controller = loader.getController();
+        controller.setAction
+                ((width, height) -> {
+                    Canvas selectedCanvas = canvasManager.getSelectedCanvas();
+                    WritableImage result = effectsFacade.moveImage(CanvasUtil.getImage(selectedCanvas), width, height);
+                    addImageToCanvasAndVerify(result, selectedCanvas);
+                });
+        openDialogWindowOnStage(root);
     }
 
 
     /**
      * Додає канвас до всіх шарів картинку, і якщо вона одна, то підганяє розміри
-     * @param image картинка
+     *
+     * @param image  картинка
      * @param canvas канвас
      */
-    private void addImageToCanvasAndVerify(WritableImage image, Canvas canvas){
+    private void addImageToCanvasAndVerify(WritableImage image, Canvas canvas) {
         CanvasUtil.writeImageOnCanvas(image, canvas);
         if (canvasManager.canvasNumber() == 1) {
             canvas.setHeight(image.getHeight());
@@ -170,5 +237,18 @@ public class MainController implements Initializable {
             canvasManager.verifySizes(canvas);
         }
     }
+
+    private void openDialogWindowOnStage(Parent root) {
+        Scene scene = new Scene(root);
+        Stage dialogStage = new Stage();
+        dialogStage.setScene(scene);
+
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(stage);
+
+        dialogStage.showAndWait();
+    }
+
+
 }
 

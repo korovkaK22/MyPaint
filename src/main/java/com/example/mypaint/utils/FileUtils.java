@@ -8,7 +8,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class FileUtils {
-
+    /**
+     * Зберігає знімок у вигляді файлу у систему користувача
+     * @param file файл, куди зберігається картинка
+     * @param image картинка
+     */
     public static void savePictureOnFile(File file, WritableImage image){
         try {
             java.awt.image.BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
@@ -21,7 +25,7 @@ public class FileUtils {
             ImageIO.write(bufferedImage, formatName, file);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Помилка при збереженні зображення: " + e.getMessage());
+            System.out.println("Trouble with saving image: " + e.getMessage());
         }
     }
 }

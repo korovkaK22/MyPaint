@@ -11,13 +11,11 @@ import java.util.List;
 
 public class CanvasUtil {
 
-    public static void fillCanvasWithColor(Canvas canvas, Color color) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(color);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    }
-
-
+    /**
+     * Отримати копію канвасу з зображенням та розмірами, але без евентів миші
+     * @param canvas канвас
+     * @return копія канвасу
+     */
     public static Canvas getCanvasCopyWithoutEvents(Canvas canvas){
         Canvas copyCanvas = new Canvas(canvas.getWidth(), canvas.getHeight());
         SnapshotParameters params = new SnapshotParameters();
@@ -32,6 +30,13 @@ public class CanvasUtil {
         return copyCanvas;
     }
 
+    /**
+     * Створити новий канвас без евентів на мишу, при цьому передавши йому картинку, та змінивши розмір
+     * @param canvas канвас
+     * @param newWidth нова ширина
+     * @param newHeight нова висота
+     * @return
+     */
     public static Canvas resizeCanvasWithoutEvents(Canvas canvas, double newWidth, double newHeight) {
         WritableImage snapshot = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
         SnapshotParameters params = new SnapshotParameters();
@@ -44,6 +49,11 @@ public class CanvasUtil {
         return newCanvas;
     }
 
+    /**
+     * Отримати фінальний знімок, наклавши всі шари канвасів
+     * @param canvases канваси
+     * @return знімок
+     */
     public static WritableImage getFinaleImage(List<Canvas> canvases){
         if (canvases.isEmpty()) {
             return null;
@@ -66,12 +76,16 @@ public class CanvasUtil {
         return resultImage;
     }
 
+    /**
+     * Отримати знімок з канвасу
+     * @param canvas канвас
+     * @return знімок
+     */
     public static WritableImage getImage(Canvas canvas) {
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
         return canvas.snapshot(params, null);
     }
-
 
     /**
      * Записує зображення в канвас, при цьому змінюючи його розміри до найбільшого
@@ -96,18 +110,6 @@ public class CanvasUtil {
         gc.clearRect(0, 0, canvasWidth, canvasHeight);
         gc.drawImage(writableImage, 0, 0);
     }
-
-    public static void writeImageOnCanvasAndShrink(WritableImage writableImage ,Canvas canvas){
-        double imageWidth = writableImage.getWidth();
-        double imageHeight = writableImage.getHeight();
-            canvas.setWidth(imageWidth);
-            canvas.setHeight(imageHeight);
-
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, imageWidth, imageHeight);
-        gc.drawImage(writableImage, 0, 0);
-    }
-
 
 
 }

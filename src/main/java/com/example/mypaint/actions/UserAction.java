@@ -5,6 +5,9 @@ import com.example.mypaint.managers.ListViewMemento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Клас, для збереження стану системи при дії користувача
+ */
 @Getter
 public class UserAction {
     static int idC =0 ;

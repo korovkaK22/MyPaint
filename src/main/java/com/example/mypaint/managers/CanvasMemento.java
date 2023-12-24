@@ -8,6 +8,9 @@ import lombok.Getter;
 
 import java.util.List;
 
+/**
+ * Клас для створення знімку менеджера канвасів.
+ */
 @AllArgsConstructor
 @Getter
 public class CanvasMemento {

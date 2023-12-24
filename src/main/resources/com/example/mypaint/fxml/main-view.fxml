@@ -34,8 +34,10 @@
           <Menu mnemonicParsing="false" text="Effects (Online)">
             <items>
               <MenuItem fx:id="effectRotate" mnemonicParsing="false" onAction="#effectRotate" text="Rotate" />
-                  <MenuItem fx:id="effectSize" mnemonicParsing="false" text="Size" />
-                  <MenuItem fx:id="effectDarkness" mnemonicParsing="false" text="Darkness" />
+                  <MenuItem fx:id="effectSize" mnemonicParsing="false" onAction="#effectSize" text="Size" />
+                  <MenuItem fx:id="effectCanvasSize" mnemonicParsing="false" onAction="#effectCanvasSize" text="Canvas" />
+                  <MenuItem mnemonicParsing="false" onAction="#cropImage" text="Crop" />
+                  <MenuItem mnemonicParsing="false" onAction="#moveImage" text="Move image" />
             </items>
           </Menu>
         </menus>

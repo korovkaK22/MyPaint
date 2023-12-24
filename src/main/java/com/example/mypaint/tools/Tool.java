@@ -18,7 +18,6 @@ public abstract class Tool {
     }
 
     public void makeActionOnReleased(Canvas canvas, MouseEvent event, ToolParams toolParams){
-
     }
 
     public void makeActionOnClicked(Canvas canvas, MouseEvent event, ToolParams toolParams){}

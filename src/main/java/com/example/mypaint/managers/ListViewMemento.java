@@ -7,6 +7,9 @@ import lombok.Getter;
 
 import java.util.List;
 
+/**
+ * Клас для створення знімку менеджера шарів.
+ */
 @AllArgsConstructor
 @Getter
 public class ListViewMemento {

@@ -60,6 +60,10 @@ public class LayersController implements Initializable {
         listViewManager.setSelectedPosition(position);
     }
 
+    /**
+     * Додавання шару поверх вибраного
+     * @param canvas Шар
+     */
     public void addNewLayer(Canvas canvas) {
         listViewManager.addNewLayerOnTop("Layer " + layerId++);
         canvasManager.addNewCanvasOnTop(canvas, listViewManager.getSelectedItemPositionReverse());
@@ -87,12 +91,6 @@ public class LayersController implements Initializable {
         Canvas selectedCanvas = canvasManager.getSelectedCanvas();
         Canvas newCanvas = CanvasUtil.getCanvasCopyWithoutEvents(selectedCanvas);
         addNewLayer(newCanvas);
-    }
-
-
-
-    public void connectLayers() {
-
     }
 
 

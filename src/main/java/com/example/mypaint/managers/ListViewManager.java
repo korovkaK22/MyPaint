@@ -6,7 +6,9 @@ import javafx.scene.control.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Клас, який керує списком шарів, які виводяться на екран зліва, та синхронізує шари з канвасами.
+ */
 public class ListViewManager {
     private final ListView<String> layersListView;
     private ObservableList<String> list;
@@ -32,7 +34,6 @@ public class ListViewManager {
 
     /**
      * Додати новий шар в список
-     *
      * @param position  позиція шару
      * @param layerName назва шару
      */
@@ -43,7 +44,6 @@ public class ListViewManager {
 
     /**
      * Зробити конкрений шар вибраним
-     *
      * @param index індекс вибраного елементу
      */
     public void setSelectedPosition(int index) {
@@ -76,22 +76,37 @@ public class ListViewManager {
         return  layersListView.getSelectionModel().getSelectedIndex();
     }
 
+    /**
+     * Отримати реверс позицію шару, який вибраний
+     * @return реверс позиція, якщо return -1, то позиція не вибрана
+     */
     public int getSelectedItemPositionReverse() {
         return list.size()-1- layersListView.getSelectionModel().getSelectedIndex();
     }
 
+    /**
+     * Отримати знімок менеджера, який потім можна буде загрузити для зміни всіх даних
+     * @return знімок
+     */
     public ListViewMemento getMemento(){
         List<String> listElements = new ArrayList<>(list);
         return new ListViewMemento(listElements, getSelectedItemPosition());
     }
 
+    /**
+     * встановити стан менеджера згідно знімка. Всі дані будуть перезаписані на дані зі знімку.
+     * @param memento знімок
+     */
     public void setMemento(ListViewMemento memento){
         list.clear();
         list.addAll(memento.getListElements());
         setSelectedPosition(memento.getSelectedPosition());
     }
 
-
+    /**
+     * Отримати кількість шарів
+     * @return кількість шарів
+     */
     public int getSize(){
         return list.size();
     }
