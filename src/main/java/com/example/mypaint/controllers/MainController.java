@@ -150,7 +150,7 @@ public class MainController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save As");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"),
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.ibm", "*.gif"),
                 new FileChooser.ExtensionFilter("All Files", "*.*")
         );
 
